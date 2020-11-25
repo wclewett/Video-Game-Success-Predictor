@@ -16,8 +16,8 @@ app = Flask(__name__)
 # home page
 @app.route("/")
 def index():
-
-    return render_template("index.html")
+    dummy = {}
+    return render_template("index.html", data=dummy)
 
 
 # results page
@@ -49,8 +49,11 @@ def game_description():
     vectors_test = vectorizer.transform(text)
     # Predict
     predicted = rf.predict(vectors_test)
-    print(predicted)
-    return render_template("index.html", data=predicted)
+    output = {
+        "output": int(predicted[0])
+    }
+    print(output) 
+    return render_template("index.html", data=output)
 
 if __name__ == "__main__":
     app.run(debug=True)
