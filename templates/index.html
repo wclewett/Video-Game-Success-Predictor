@@ -11,7 +11,43 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}"/>
   </head>
   <body>
-    <nav class="navbar navbar-expand navbar-dark" style="background-color: rgb(101, 52, 150)">
+    <nav
+    style="background: rgb(101,52,150) !important"
+    class="navbar navbar-expand-lg navbar-dark bg-secondary; col-sm-12"
+  >
+    <a class="navbar-brand" href="{{ url_for('home') }}">Home</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="{{ url_for('DataAnalysis') }}"
+              >Data Analysis<span class="sr-only">(current)
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('SearchDatabase') }}"
+              >Pitch Your Own Game</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('table') }}"
+              >Result</span></a>
+          </li>
+     
+          
+        </ul>
+      </div>
+    </nav>
+    <!-- <nav class="navbar navbar-expand navbar-dark" style="background-color: rgb(101, 52, 150)">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Pitch Your Own Game</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,7 +59,7 @@
                 </li>
             </div>
         </div>
-    </nav>
+    </nav> -->
     <div class="conatiner-fluid" style="background-color: rgb(148, 199, 115);">
         <div class="row">
             <div class="col-sm-3" style="background-image: url('https://media.indiumgames.com/medialibrary/2014/07/MakingMap1.png');">
