@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Pitch Your Own Game</title>
+    <!--Bootstrap CSS-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <!-- d3 JavaScript -->
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <!-- Local Stylesheet-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}"/>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand navbar-dark" style="background-color: rgb(101, 52, 150)">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Pitch Your Own Game</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-nav">
+                <li class="nav-item">
+                <a class="nav-link" href="#" style="color: rgb(255, 255, 255);">Home</a>
+                </li>
+            </div>
+        </div>
+    </nav>
+    <div class="conatiner-fluid" style="background-color: rgb(148, 199, 115);">
+        <div class="row">
+            <div class="col-sm-3" style="background-image: url('https://media.indiumgames.com/medialibrary/2014/07/MakingMap1.png');">
+            </div>
+            <div class="col-sm-6">
+                <br>
+                <div class="row" style="justify-content: center; background-color: rgb(148, 199, 115);"> 
+                    <h2 style="justify-content: center;">Describe Your Game Idea...</h2>
+                </div>
+                <br>
+                <div class="row" style="justify-content: center; background-color: rgb(148, 199, 115);">
+                    <form action="/" method="POST">
+                        <p class="var-heading">Game Description</p>
+                        <p class="description-text">Describe the storyline or background of your game in a few sentences.</p>
+                        <textarea name="text" id="descTextArea" cols="50" rows="10"></textarea>
+                        <br>
+                        <p class="var-heading">Console Family:</p>
+                        <p class="description-text">Add the family of console your game would be playerd on by generation.</p>
+                        <select id="consolesDropdown" class="btn btn-secondary dropdown-toggle" name="consoles">
+                            <option value="">-------------------------------------------------------------------------------------------</option>
+                            <option value="Atari">Atari</option>
+                            <option value="Sega">Sega</option>
+                            <option value="SNES">SNES</option>
+                            <option value="N64">Nintendo64</option>
+                            <!--Append Consoles here using d3-->            
+                        </select>
+                        <br>
+                        <p class="var-heading">Genres:</p>
+                        <p class="description-text">Think of the type of game. Ex. Adventure, Platform, Shooter</p>
+                        <textarea name="genres" id="genreTextArea" cols="50" rows="1"></textarea>
+                        <p class="var-heading">Themes:</p> 
+                        <p class="description-text">Think of the style/setting of game. Ex. Action, Mystery, Sci-Fi</p>
+                        <textarea name="themes" id="genreTextArea" cols="50" rows="1"></textarea>
+                        <p class="var-heading">Player Perspective:</p> 
+                        <p class="description-text">Think of the player's perspective in the game. Ex. First-Person, Third-Person</p>
+                        <textarea name="perspective" id="genreTextArea" cols="50" rows="1"></textarea>
+                        <p class="var-heading">Series:</p>
+                        <p class="description-text">If your game is going to be a sequel to series of games, you can add that here.</p>
+                        <select id="seriesDropdown" class="btn btn-secondary dropdown-toggle" name="series">
+                            <option value="">-------------------------------------------------------------------------------------------</option>
+                        </select>
+                        <br>
+                        <br>
+                        <input type="submit" style="text-align: center;">
+                    </form>
+                </div>
+            </div>
+            <div class="col-sm-3" style="background-image: url('https://media.indiumgames.com/medialibrary/2014/07/MakingMap1.png');">
+            </div>
+        </div>
+        <br>
+        <br>
+    </div>
+    <div id="footer">
+        <p>Built by Team Splinter &copy;2020</p>
+    </div>
+  </body>
+  <script type="text/javascript" src="{{url_for('static', filename='js/functions.js')}}"></script>
+  <script id="locations" type="text/javascript">
+    var data = dataPull({{ data | tojson }});
+    console.log(data);
+ </script>
+</html>
