@@ -63,7 +63,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random
 
 # Model (can also use single decision tree)
 from sklearn.ensemble import RandomForestClassifier
-rf = RandomForestClassifier(n_estimators=10)
+rf = RandomForestClassifier(n_estimators=1000)
 
 # Train
 rf.fit(X_train, y_train.astype(int))
