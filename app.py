@@ -52,12 +52,6 @@ column_trans = ColumnTransformer(
      ('TfIdf',TfidfVectorizer(stop_words='english'), 'gameDescription')],
     remainder='drop')
 
-column_trans.fit(X_df)
-column_trans.get_feature_names()
-X = column_trans.transform(X_df).toarray()
-# Split data into test and train
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random_state=42, stratify=y)
-
 #prediction function
 def ValuePredictor(to_predict_list):
     clf = pickle.load(open("static/assets/model.pkl","rb"))
@@ -118,6 +112,10 @@ def form_render():
 @app.route("/application", methods=['POST'])
 def form_submit():
     start_time = time.time()
+        
+    column_trans.fit(X_df)
+    X = column_trans.transform(X_df).toarray()
+
     # Retrieve data from HTML form
     data_row = []
     data_row.append(request.form['consoles'])
