@@ -11,7 +11,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 # Read in data
-data = pd.read_csv('assets/data/compressed_df.csv').drop('Unnamed: 0', axis=1)
+data = pd.read_csv('static/assets/data/compressed_df.csv').drop('Unnamed: 0', axis=1)
 # begin X,y transformation
 ml_data_feed = data[['systems', 'genres', 'playModes', 'themes', 'series', 'playerPerspectives', 'gameDescription', 'memberRating']]
 ml_data_feed = ml_data_feed.fillna('None Specified')
@@ -53,7 +53,7 @@ print(X)
 
 
 # Split data into test and train
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42, stratify=y)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random_state=42, stratify=y)
 
 #####################
 ### RANDOM FOREST ###
@@ -61,21 +61,21 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random
 
 # Model (can also use single decision tree)
 from sklearn.ensemble import RandomForestClassifier
-rf = RandomForestClassifier(n_estimators=1500)
+rf = RandomForestClassifier(n_estimators=1000)
 
 # Train
 rf.fit(X_train, y_train.astype(int))
-# Test
-predicted = rf.predict(X_test)
-pred_bins = np.bincount(predicted)
-occurance = np.nonzero(pred_bins)[0]
-print(" ")
-print("Random Forest Guess Rates")
-for i in range(len(occurance)):
-    print(occurance[i], pred_bins[occurance][i]/len(y_test))
+# # Test
+# predicted = rf.predict(X_test)
+# pred_bins = np.bincount(predicted)
+# occurance = np.nonzero(pred_bins)[0]
+# print(" ")
+# print("Random Forest Guess Rates")
+# for i in range(len(occurance)):
+#     print(occurance[i], pred_bins[occurance][i]/len(y_test))
 
-# Accuracy
-print(f"The random forest is {np.round(np.mean(predicted == y_test.astype(int)) * 100, decimals=2)}% accurate.")
+# # Accuracy
+# print(f"The random forest is {np.round(np.mean(predicted == y_test.astype(int)) * 100, decimals=2)}% accurate.")
 
 #####################
 ### DECISION TREE ###
