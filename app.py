@@ -12,6 +12,8 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder
 from itertools import groupby
+# Model (can also use single decision tree)
+from sklearn.ensemble import RandomForestClassifier
 
 app = Flask(__name__)
 
@@ -35,12 +37,7 @@ for i in range(len(y)):
         y[i] = 2
     else:
         y[i] = 1
-print(y.value_counts())
 y.values.reshape(-1, 1)
-    
-print(X_df.shape, y.shape)
-
-
 column_trans = ColumnTransformer(
     [('system_category', OneHotEncoder(dtype='int'), ['systems']),
      ('genre_category', OneHotEncoder(dtype='int'), ['genres']),
@@ -50,26 +47,6 @@ column_trans = ColumnTransformer(
      ('playerPerspectives', OneHotEncoder(dtype='int'), ['playerPerspectives']),
      ('TfIdf',TfidfVectorizer(stop_words='english'), 'gameDescription')],
     remainder='drop')
-
-column_trans.fit(X_df)
-column_trans.get_feature_names()
-X = column_trans.transform(X_df).toarray()
-print(X)
-
-
-# Split data into test and train
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random_state=42, stratify=y)
-
-#####################
-### RANDOM FOREST ###
-#####################
-
-# Model (can also use single decision tree)
-from sklearn.ensemble import RandomForestClassifier
-rf = RandomForestClassifier(n_estimators=1000)
-
-# Train
-rf.fit(X_train, y_train.astype(int))
 
 # home page
 @app.route("/")
@@ -125,6 +102,17 @@ def form_render():
 @app.route("/application", methods=['POST'])
 def form_submit():
     start_time = time.time()
+    column_trans.fit(X_df)
+    column_trans.get_feature_names()
+    X = column_trans.transform(X_df).toarray()
+    # Split data into test and train
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random_state=42, stratify=y)
+    #####################
+    ### RANDOM FOREST ###
+    #####################
+    rf = RandomForestClassifier(n_estimators=1000)
+    # Train
+    rf.fit(X_train, y_train.astype(int))
     # Retrieve data from HTML form
     data_row = []
     data_row.append(request.form['consoles'])
