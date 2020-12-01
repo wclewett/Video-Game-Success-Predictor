@@ -51,14 +51,17 @@ column_trans = ColumnTransformer(
      ('playerPerspectives', OneHotEncoder(dtype='int'), ['playerPerspectives']),
      ('TfIdf',TfidfVectorizer(stop_words='english'), 'gameDescription')],
     remainder='drop')
+
 column_trans.fit(X_df)
 column_trans.get_feature_names()
 X = column_trans.transform(X_df).toarray()
+# Split data into test and train
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random_state=42, stratify=y)
 
 #prediction function
 def ValuePredictor(to_predict_list):
     rf = pickle.load(open("static/assets/model.pkl","rb"))
-    result = rf.predict(to_predict)
+    result = rf.predict(to_predict_list)
     return result[0]
 
 # home page
@@ -165,7 +168,7 @@ def form_submit():
         "yourSeries": data_row[4],
         "yourPerspectives": data_row[5],
         "yourDesc": data_row[6],
-        "prediction": int(prediction[0]),
+        "prediction": int(prediction),
         "closestPoint": similarGames,
         "allRatings": summaryData
     }
