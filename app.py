@@ -60,8 +60,8 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random
 
 #prediction function
 def ValuePredictor(to_predict_list):
-    rf = pickle.load(open("static/assets/model.pkl","rb"))
-    result = rf.predict(to_predict_list)
+    clf = pickle.load(open("static/assets/model.pkl","rb"))
+    result = clf.predict(to_predict_list)
     return result[0]
 
 # home page
