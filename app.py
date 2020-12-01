@@ -20,12 +20,10 @@ warnings.filterwarnings("ignore")
 
 # Read in data
 data = pd.read_csv('assets/data/compressed_df.csv').drop('Unnamed: 0', axis=1)
-
+data = data.fillna('None Specified')
 # begin X,y transformation
-ml_data_feed = data[['systems', 'genres', 'playModes', 'themes', 'series', 'playerPerspectives', 'gameDescription', 'memberRating']]
-ml_data_feed = ml_data_feed.fillna('None Specified')
+ml_data_feed = data[['title', 'systems', 'genres', 'playModes', 'themes', 'series', 'playerPerspectives', 'gameDescription', 'memberRating']]
 X_df = ml_data_feed[['systems', 'genres', 'playModes', 'themes', 'series', 'playerPerspectives', 'gameDescription']]
-
 # Create X,y
 y = ml_data_feed['memberRating']
 for i in range(len(y)):
@@ -54,8 +52,6 @@ column_trans = ColumnTransformer(
 
 column_trans.fit(X_df)
 X = column_trans.transform(X_df).toarray()
-print(X)
-
 
 # Split data into test and train
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random_state=42, stratify=y)
@@ -104,7 +100,7 @@ def homepage():
 
 # Application Page
 @app.route("/application")
-def form_submit():
+def form_render():
     unique_systems = list(ml_data_feed['systems'].unique())
     unique_genres = sorted(list(ml_data_feed['genres'].unique()))
     unique_playModes = sorted(list(ml_data_feed['playModes'].unique()))
@@ -123,55 +119,57 @@ def form_submit():
 
 # results page
 @app.route("/application", methods=['POST'])
-def game_description():
+def form_submit():
     start_time = time.time()
     # Retrieve data from HTML form
-    console_family = []
-    console_family.append(request.form['consoles'])
-    genres = []
-    genres.append(request.form['genres'])
-    playModes = []
-    playModes.append(request.form['playModes'])
-    themes = []
-    themes.append(request.form['themes'])
-    series = []
-    series.append(request.form['series'])
-    perspectives = []
-    perspectives.append(request.form['perspective'])
-    text = []
-    text.append(request.form['text'])
-    print(text)
-    print(console_family)
-    print(genres)
-    print(themes)
-    print(perspectives)
+    data_row = []
+    data_row.append(request.form['consoles'])
+    data_row.append(request.form['genres'])
+    data_row.append(request.form['playModes'])
+    data_row.append(request.form['themes'])
+    data_row.append(request.form['series'])
+    data_row.append(request.form['perspectives'])
+    data_row.append(request.form['text'])
+    X_user = pd.DataFrame(np.array(data_row).reshape(1, -1), columns=['systems', 'genres', 'playModes', 'themes', 'series', 'playerPerspectives', 'gameDescription'])
     # transform user input data
-
+    X_user_feed = column_trans.transform(X_user).toarray()
     # Predict
-
+    prediction = rf.predict(X_user_feed)
     # BRUTE FORCE CLOSEST POINTS
-    similarGames = {
-        "game_1": game_1,
-        "game_2": game_2,
-        "game_3": game_3,
-        "game_4": game_4,
-        "game_5": game_5,
-        "game_6": game_6,
-        "game_7": game_7,
-        "game_8": game_8,
-        "game_9": game_9,
-        "game_10": game_10
-    }
+    # compute distances
+    d = ((X - X_user_feed)**2).sum(axis=1)
+    ndx = d.argsort() # indirect sort 
+    result = data.iloc[ndx[:10]]
+    # print 10 nearest points to the chosen one
+    print(result)
+    similarGames = {}
+    for i in range(len(result)):
+        game_number = f"game_{i+1}"
+        game_vars = []
+        game_vars.append(result.iloc[i]['title'])
+        game_vars.append(result.iloc[i]['moreInfo'])
+        game_vars.append(result.iloc[i]['systems'])
+        game_vars.append(result.iloc[i]['genres'])
+        game_vars.append(result.iloc[i]['playModes'])
+        game_vars.append(result.iloc[i]['themes'])
+        game_vars.append(result.iloc[i]['series'])
+        game_vars.append(result.iloc[i]['playerPerspectives'])
+        game_vars.append(result.iloc[i]['imageLink'])
+        game_vars.append(int(result.iloc[i]['memberRating']))
+        game_vars.append(result.iloc[i]['gameDescription'])
+        similarGames[game_number] = game_vars
     output = {
-        "yourDesc": text[0],
-        "yourConsole": console_family[0],
-        "yourGenres": genres[0],
-        "yourThemes": themes[0],
-        "yourPerspective": perspectives[0],
-        "output": int(predicted[0]),
-        "similarGames": similarGames
+        "yourSystem": data_row[0],
+        "yourGenres": data_row[1],
+        "yourPlayModes": data_row[2],
+        "yourThemes": data_row[3],
+        "yourSeries": data_row[4],
+        "yourPerspectives": data_row[5],
+        "yourDesc": data_row[6],
+        "prediction": int(prediction[0]),
+        "closestPoint": similarGames,
+        "allRatings": list(y.astype(int))
     }
-    print(output)
     print("--- %s seconds ---" % (time.time() - start_time))
     return render_template("response.html", data=output)
 

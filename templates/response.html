@@ -2,7 +2,7 @@
 <html lang="en-us">
   <head>
     <meta charset="UTF-8">
-    <title>Pitch Your Own Game</title>
+    <title>Pitch-A-Game</title>
     <!--Bootstrap CSS-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <!-- d3 JavaScript -->
@@ -13,9 +13,8 @@
   <body>
     <nav
     style="background: rgb(101,52,150) !important"
-    class="navbar navbar-expand-lg navbar-dark bg-secondary; col-sm-12"
-  >
-    <a class="navbar-brand" href="{{ url_for('home') }}">Home</a>
+    class="navbar navbar-expand-lg navbar-dark bg-secondary; col-sm-12">
+    <a class="navbar-brand" href="/">Home</a>
     <button
       class="navbar-toggler"
       type="button"
@@ -28,98 +27,693 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="{{ url_for('DataAnalysis') }}"
-              >Data Analysis<span class="sr-only">(current)
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('SearchDatabase') }}"
-              >Pitch Your Own Game</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('table') }}"
-              >Result</span></a>
-          </li>
-     
-          
-        </ul>
-      </div>
-    </nav>
-    <!-- <nav class="navbar navbar-expand navbar-dark" style="background-color: rgb(101, 52, 150)">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">Pitch Your Own Game</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-nav">
-                <li class="nav-item">
-                <a class="nav-link" href="#" style="color: rgb(255, 255, 255);">Home</a>
-                </li>
-            </div>
-        </div>
-    </nav> -->
-    <div class="conatiner-fluid" style="background-color: rgb(148, 199, 115);">
-        <div class="row">
-            <div class="col-sm-3" style="background-image: url('https://media.indiumgames.com/medialibrary/2014/07/MakingMap1.png');">
-            </div>
-            <div class="col-sm-6">
-                <br>
-                <div class="row" style="justify-content: center; background-color: rgb(148, 199, 115);"> 
-                    <h2 style="justify-content: center;">Describe Your Game Idea...</h2>
-                </div>
-                <br>
-                <div class="row" style="justify-content: center; background-color: rgb(148, 199, 115);">
-                    <form action="/" method="POST">
-                        <p class="var-heading">Game Description</p>
-                        <p class="description-text">Describe the storyline or background of your game in a few sentences.</p>
-                        <textarea name="text" id="descTextArea" cols="50" rows="10"></textarea>
-                        <br>
-                        <p class="var-heading">Console Family:</p>
-                        <p class="description-text">Add the family of console your game would be playerd on by generation.</p>
-                        <select id="consolesDropdown" class="btn btn-secondary dropdown-toggle" name="consoles">
-                            <option value="">-------------------------------------------------------------------------------------------</option>
-                            <option value="Atari">Atari</option>
-                            <option value="Sega">Sega</option>
-                            <option value="SNES">SNES</option>
-                            <option value="N64">Nintendo64</option>
-                            <!--Append Consoles here using d3-->            
-                        </select>
-                        <br>
-                        <p class="var-heading">Genres:</p>
-                        <p class="description-text">Think of the type of game. Ex. Adventure, Platform, Shooter</p>
-                        <textarea name="genres" id="genreTextArea" cols="50" rows="1"></textarea>
-                        <p class="var-heading">Themes:</p> 
-                        <p class="description-text">Think of the style/setting of game. Ex. Action, Mystery, Sci-Fi</p>
-                        <textarea name="themes" id="genreTextArea" cols="50" rows="1"></textarea>
-                        <p class="var-heading">Player Perspective:</p> 
-                        <p class="description-text">Think of the player's perspective in the game. Ex. First-Person, Third-Person</p>
-                        <textarea name="perspective" id="genreTextArea" cols="50" rows="1"></textarea>
-                        <p class="var-heading">Series:</p>
-                        <p class="description-text">If your game is going to be a sequel to series of games, you can add that here.</p>
-                        <select id="seriesDropdown" class="btn btn-secondary dropdown-toggle" name="series">
-                            <option value="">-------------------------------------------------------------------------------------------</option>
-                        </select>
-                        <br>
-                        <br>
-                        <input type="submit" style="text-align: center;">
-                    </form>
-                </div>
-            </div>
-            <div class="col-sm-3" style="background-image: url('https://media.indiumgames.com/medialibrary/2014/07/MakingMap1.png');">
-            </div>
-        </div>
-        <br>
-        <br>
-        <div id="footer">
-            <p>Built by Team Splinter &copy;2020</p>
-        </div>
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/application"><strong>Pitch Your Own Game</strong></a>
+        </li>
+      </ul>
     </div>
+  </nav>
+  <br>
+  <div class="container-fluid" style="justify-content: center;text-align: center;">
+    <h3>Let's see how you did...</h3>
+    <br>
+    <p id="yourSystem">Your System Generation: </p>
+    <br>
+    <p id="yourGenres">Your Genres: </p>
+    <br>
+    <p id="yourThemes">Your Themes: </p>
+    <br>
+    <p id="yourSeries">Your Series: </p>
+    <br>
+    <p id="yourPlayModes">Your Play Modes: </p>
+    <br>
+    <p id="yourPerspectives">Your Perspectives: </p>
+    <br>
+    <p id="yourDesc">Your Description:<br> </p>
+    <br>
+  </div>
+  <div id="resultPlot" class="container-fluid" style="justify-content: center;">
+    
+  </div>
+  <div class="container-fluid" style="justify-content: left; padding-left: 40px;">
+    <div id="game1">
+      <div class="row" style="border: 5px solid; border-color: black #444 #888 #ccc;">
+        <div class="col-sm-3">
+          <br>
+          <img id="image1" src="" class="card-img-top" height="500" width="200">
+        </div>
+        <div class="col-sm-4" style="text-align: left; padding-left: 10px;">
+          <br>
+          <h4 id="title1"></h4>
+          <br>
+          <p id="system1">System Generation: </p>
+          <br>
+          <p id="genre1">Genres: </p>
+          <br>
+          <p id="theme1">Themes: </p>
+          <br>
+          <p id="series1">Series: </p>
+          <br>
+          <p id="playModes1">Play Modes: </p>
+          <br>
+          <p id="perspective1">Perspectives: </p>
+          <br>
+          <p id="rating1">Star Rating: </p>
+        </div>
+        <div class="col-sm-5" style="text-align: left; padding-left: 10px; padding-right: 10px;">
+          <br>
+          <p id="desc1">Description: </p>
+          <br>
+          <p><a id="link1" href="">More Info</a></p>
+        </div>
+      </div>
+      <br>
+    </div>
+    <div id="game2">
+      <div class="row" style="border: 5px solid; border-color: black #444 #888 #ccc;">
+        <div class="col-sm-3">
+          <br>
+          <img id="image2" src="" class="card-img-top" height="500" width="200">
+        </div>
+        <div class="col-sm-4" style="text-align: left; padding-left: 10px;">
+          <br>
+          <h4 id="title2"></h4>
+          <br>
+          <p id="system2">System Generation: </p>
+          <br>
+          <p id="genre2">Genres: </p>
+          <br>
+          <p id="theme2">Themes: </p>
+          <br>
+          <p id="series2">Series: </p>
+          <br>
+          <p id="playModes2">Play Modes: </p>
+          <br>
+          <p id="perspective2">Perspectives: </p>
+          <br>
+          <p id="rating2">Star Rating: </p>
+        </div>
+        <div class="col-sm-5" style="text-align: left; padding-left: 10px; padding-right: 10px;">
+          <br>
+          <p id="desc2">Description: </p>
+          <br>
+          <p><a id="link2" href="">More Info</a></p>
+        </div>
+      </div>
+      <br>
+    </div>
+    <div id="game3">
+      <div class="row" style="border: 5px solid; border-color: black #444 #888 #ccc;">
+        <div class="col-sm-3">
+          <br>
+          <img id="image3" src="" class="card-img-top" height="500" width="200">
+        </div>
+        <div class="col-sm-4" style="text-align: left; padding-left: 10px;">
+          <br>
+          <h4 id="title3"></h4>
+          <br>
+          <p id="system3">System Generation: </p>
+          <br>
+          <p id="genre3">Genres: </p>
+          <br>
+          <p id="theme3">Themes: </p>
+          <br>
+          <p id="series3">Series: </p>
+          <br>
+          <p id="playModes3">Play Modes: </p>
+          <br>
+          <p id="perspective3">Perspectives: </p>
+          <br>
+          <p id="rating3">Star Rating: </p>
+        </div>
+        <div class="col-sm-5" style="text-align: left; padding-left: 10px; padding-right: 10px;">
+          <br>
+          <p id="desc3">Description: </p>
+          <br>
+          <p><a id="link3" href="">More Info</a></p>
+        </div>
+      </div>
+      <br>
+    </div>
+    <div id="game4">
+      <div class="row" style="border: 5px solid; border-color: black #444 #888 #ccc;">
+        <div class="col-sm-3">
+          <br>
+          <img id="image4" src="" class="card-img-top" height="500" width="200">
+        </div>
+        <div class="col-sm-4" style="text-align: left; padding-left: 10px;">
+          <br>
+          <h4 id="title4"></h4>
+          <br>
+          <p id="system4">System Generation: </p>
+          <br>
+          <p id="genre4">Genres: </p>
+          <br>
+          <p id="theme4">Themes: </p>
+          <br>
+          <p id="series4">Series: </p>
+          <br>
+          <p id="playModes4">Play Modes: </p>
+          <br>
+          <p id="perspective4">Perspectives: </p>
+          <br>
+          <p id="rating4">Star Rating: </p>
+        </div>
+        <div class="col-sm-5" style="text-align: left; padding-left: 10px; padding-right: 10px;">
+          <br>
+          <p id="desc4">Description: </p>
+          <br>
+          <p><a id="link4" href="">More Info</a></p>
+        </div>
+      </div>
+      <br>
+    </div>     
+    <div id="game5">
+      <div class="row" style="border: 5px solid; border-color: black #444 #888 #ccc;">
+        <div class="col-sm-3">
+          <br>
+          <img id="image5" src="" class="card-img-top" height="500" width="200">
+        </div>
+        <div class="col-sm-4" style="text-align: left; padding-left: 10px;">
+          <br>
+          <h4 id="title5"></h4>
+          <br>
+          <p id="system5">System Generation: </p>
+          <br>
+          <p id="genre5">Genres: </p>
+          <br>
+          <p id="theme5">Themes: </p>
+          <br>
+          <p id="series5">Series: </p>
+          <br>
+          <p id="playModes5">Play Modes: </p>
+          <br>
+          <p id="perspective5">Perspectives: </p>
+          <br>
+          <p id="rating5">Star Rating: </p>
+        </div>
+        <div class="col-sm-5" style="text-align: left; padding-left: 10px; padding-right: 10px;">
+          <br>
+          <p id="desc5">Description: </p>
+          <br>
+          <p><a id="link5" href="">More Info</a></p>
+        </div>
+      </div>
+      <br>
+    </div>   
+    <div id="game6">
+      <div class="row" style="border: 5px solid; border-color: black #444 #888 #ccc;">
+        <div class="col-sm-3">
+          <br>
+          <img id="image6" src="" class="card-img-top" height="500" width="200">
+        </div>
+        <div class="col-sm-4" style="text-align: left; padding-left: 10px;">
+          <br>
+          <h4 id="title6"></h4>
+          <br>
+          <p id="system6">System Generation: </p>
+          <br>
+          <p id="genre6">Genres: </p>
+          <br>
+          <p id="theme6">Themes: </p>
+          <br>
+          <p id="series6">Series: </p>
+          <br>
+          <p id="playModes6">Play Modes: </p>
+          <br>
+          <p id="perspective6">Perspectives: </p>
+          <br>
+          <p id="rating6">Star Rating: </p>
+        </div>
+        <div class="col-sm-5" style="text-align: left; padding-left: 10px; padding-right: 10px;">
+          <br>
+          <p id="desc6">Description: </p>
+          <br>
+          <p><a id="link6" href="">More Info</a></p>
+        </div>
+      </div>
+      <br>
+    </div>  
+    <div id="game7">
+      <div class="row" style="border: 5px solid; border-color: black #444 #888 #ccc;">
+        <div class="col-sm-3">
+          <br>
+          <img id="image7" src="" class="card-img-top" height="500" width="200">
+        </div>
+        <div class="col-sm-4" style="text-align: left; padding-left: 10px;">
+          <br>
+          <h4 id="title7"></h4>
+          <br>
+          <p id="system7">System Generation: </p>
+          <br>
+          <p id="genre7">Genres: </p>
+          <br>
+          <p id="theme7">Themes: </p>
+          <br>
+          <p id="series7">Series: </p>
+          <br>
+          <p id="playModes7">Play Modes: </p>
+          <br>
+          <p id="perspective7">Perspectives: </p>
+          <br>
+          <p id="rating7">Star Rating: </p>
+        </div>
+        <div class="col-sm-5" style="text-align: left; padding-left: 10px; padding-right: 10px;">
+          <br>
+          <p id="desc7">Description: </p>
+          <br>
+          <p><a id="link7" href="">More Info</a></p>
+        </div>
+      </div>
+      <br>
+    </div> 
+    <div id="game8">
+      <div class="row" style="border: 5px solid; border-color: black #444 #888 #ccc;">
+        <div class="col-sm-3">
+          <br>
+          <img id="image8" src="" class="card-img-top" height="500" width="200">
+        </div>
+        <div class="col-sm-4" style="text-align: left; padding-left: 10px;">
+          <br>
+          <h4 id="title8"></h4>
+          <br>
+          <p id="system8">System Generation: </p>
+          <br>
+          <p id="genre8">Genres: </p>
+          <br>
+          <p id="theme8">Themes: </p>
+          <br>
+          <p id="series8">Series: </p>
+          <br>
+          <p id="playModes8">Play Modes: </p>
+          <br>
+          <p id="perspective8">Perspectives: </p>
+          <br>
+          <p id="rating8">Star Rating: </p>
+        </div>
+        <div class="col-sm-5" style="text-align: left; padding-left: 10px; padding-right: 10px;">
+          <br>
+          <p id="desc8">Description: </p>
+          <br>
+          <p><a id="link8" href="">More Info</a></p>
+        </div>
+      </div>
+      <br>
+    </div>    
+    <div id="game9">
+      <div class="row" style="border: 5px solid; border-color: black #444 #888 #ccc;">
+        <div class="col-sm-3">
+          <br>
+          <img id="image9" src="" class="card-img-top" height="500" width="200">
+        </div>
+        <div class="col-sm-4" style="text-align: left; padding-left: 10px;">
+          <br>
+          <h4 id="title9"></h4>
+          <br>
+          <p id="system9">System Generation: </p>
+          <br>
+          <p id="genre9">Genres: </p>
+          <br>
+          <p id="theme9">Themes: </p>
+          <br>
+          <p id="series9">Series: </p>
+          <br>
+          <p id="playModes9">Play Modes: </p>
+          <br>
+          <p id="perspective9">Perspectives: </p>
+          <br>
+          <p id="rating9">Star Rating: </p>
+        </div>
+        <div class="col-sm-5" style="text-align: left; padding-left: 10px; padding-right: 10px;">
+          <br>
+          <p id="desc9">Description: </p>
+          <br>
+          <p><a id="link9" href="">More Info</a></p>
+        </div>
+      </div>
+      <br>
+    </div>   
+    <div id="game10">
+      <div class="row" style="border: 5px solid; border-color: black #444 #888 #ccc;">
+        <div class="col-sm-3">
+          <br>
+          <img id="image10" src="" class="card-img-top" height="500" width="200">
+        </div>
+        <div class="col-sm-4" style="text-align: left; padding-left: 10px;">
+          <br>
+          <h4 id="title10"></h4>
+          <br>
+          <p id="system10">System Generation: </p>
+          <br>
+          <p id="genre10">Genres: </p>
+          <br>
+          <p id="theme10">Themes: </p>
+          <br>
+          <p id="series10">Series: </p>
+          <br>
+          <p id="playModes10">Play Modes: </p>
+          <br>
+          <p id="perspective10">Perspectives: </p>
+          <br>
+          <p id="rating10">Star Rating: </p>
+        </div>
+        <div class="col-sm-5" style="text-align: left; padding-left: 10px; padding-right: 10px;">
+          <br>
+          <p id="desc10">Description: </p>
+          <br>
+          <p><a id="link10" href="">More Info</a></p>
+        </div>
+      </div>
+      <br>
+    </div>  
+  </div>
   </body>
-  <script type="text/javascript" src="{{url_for('static', filename='js/functions.js')}}"></script>
-  <script id="locations" type="text/javascript">
-    var data = dataPull({{ data | tojson }});
-    console.log(data)
+  <script type="text/javascript" src="{{url_for('static', filename='js/results.js')}}"></script>
+  <script type="text/javascript">
+    var output = dataPull({{ data | tojson }});
+    var yourSystem = document.getElementById("yourSystem")
+    var textNodeSystem = document.createTextNode(output.yourSystem);
+    yourSystem.appendChild(textNodeSystem);
+    var yourGenres = document.getElementById("yourGenres")
+    var textNodeGenres = document.createTextNode(output.yourGenres);
+    yourGenres.appendChild(textNodeGenres);
+    var yourThemes = document.getElementById("yourThemes")
+    var textNodeThemes = document.createTextNode(output.yourThemes);
+    yourThemes.appendChild(textNodeThemes);
+    var yourSeries = document.getElementById("yourSeries")
+    var textNodeSeries = document.createTextNode(output.yourSeries);
+    yourSeries.appendChild(textNodeSeries);
+    var yourPlayModes = document.getElementById("yourPlayModes")
+    var textNodePlayModes = document.createTextNode(output.yourPlayModes);
+    yourPlayModes.appendChild(textNodePlayModes);
+    var yourPerspectives = document.getElementById("yourPerspectives")
+    var textNodePerspectives = document.createTextNode(output.yourPerspectives);
+    yourPerspectives.appendChild(textNodePerspectives);
+    var yourDesc = document.getElementById("yourDesc")
+    var textNodeDesc = document.createTextNode(output.yourDesc);
+    yourDesc.appendChild(textNodeDesc);
+    // Image Refs
+    document.getElementById("image1").src = output.closestPoint.game_1[8];
+    document.getElementById("image2").src = output.closestPoint.game_2[8];
+    document.getElementById("image3").src = output.closestPoint.game_3[8];
+    document.getElementById("image4").src = output.closestPoint.game_4[8];
+    document.getElementById("image5").src = output.closestPoint.game_5[8];
+    document.getElementById("image6").src = output.closestPoint.game_6[8];
+    document.getElementById("image7").src = output.closestPoint.game_7[8];
+    document.getElementById("image8").src = output.closestPoint.game_8[8];
+    document.getElementById("image9").src = output.closestPoint.game_9[8];
+    document.getElementById("image10").src = output.closestPoint.game_10[8];
+    // IGDB Page Links
+    document.getElementById("link1").href = output.closestPoint.game_1[1];
+    document.getElementById("link2").href = output.closestPoint.game_2[1];
+    document.getElementById("link3").href = output.closestPoint.game_3[1];
+    document.getElementById("link4").href = output.closestPoint.game_4[1];
+    document.getElementById("link5").href = output.closestPoint.game_5[1];
+    document.getElementById("link6").href = output.closestPoint.game_6[1];
+    document.getElementById("link7").href = output.closestPoint.game_7[1];
+    document.getElementById("link8").href = output.closestPoint.game_8[1];
+    document.getElementById("link9").href = output.closestPoint.game_9[1];
+    document.getElementById("link10").href = output.closestPoint.game_10[1];
+    // Text Elements for Result 1
+    var title1 = document.getElementById("title1")
+    var textNodeTitle1 = document.createTextNode(output.closestPoint.game_1[0]);
+    title1.appendChild(textNodeTitle1);
+    var system1 = document.getElementById("system1")
+    var textNodesystem1 = document.createTextNode(output.closestPoint.game_1[2]);
+    system1.appendChild(textNodesystem1);
+    var genre1 = document.getElementById("genre1")
+    var textNodegenre1 = document.createTextNode(output.closestPoint.game_1[3]);
+    genre1.appendChild(textNodegenre1);
+    var theme1 = document.getElementById("theme1")
+    var textNodetheme1 = document.createTextNode(output.closestPoint.game_1[5]);
+    theme1.appendChild(textNodetheme1);
+    var series1 = document.getElementById("series1")
+    var textNodeseries1 = document.createTextNode(output.closestPoint.game_1[6]);
+    series1.appendChild(textNodeseries1);
+    var playModes1 = document.getElementById("playModes1")
+    var textNodeplayModes1 = document.createTextNode(output.closestPoint.game_1[4]);
+    playModes1.appendChild(textNodeplayModes1);
+    var perspective1 = document.getElementById("perspective1")
+    var textNodeperspective1 = document.createTextNode(output.closestPoint.game_1[7]);
+    perspective1.appendChild(textNodeperspective1);
+    var desc1 = document.getElementById("desc1")
+    var textNodedesc1 = document.createTextNode(output.closestPoint.game_1[10]);
+    desc1.appendChild(textNodedesc1);
+    var rating1 = document.getElementById("rating1")
+    var textNoderating1 = document.createTextNode(convertNumToStar(output.closestPoint.game_1[9]));
+    rating1.appendChild(textNoderating1);
+    // Text Elements for Result 2
+    var title2 = document.getElementById("title2")
+    var textNodeTitle2 = document.createTextNode(output.closestPoint.game_2[0]);
+    title2.appendChild(textNodeTitle2);
+    var system2 = document.getElementById("system2")
+    var textNodesystem2 = document.createTextNode(output.closestPoint.game_2[2]);
+    system2.appendChild(textNodesystem2);
+    var genre2 = document.getElementById("genre2")
+    var textNodegenre2 = document.createTextNode(output.closestPoint.game_2[3]);
+    genre2.appendChild(textNodegenre2);
+    var theme2 = document.getElementById("theme2")
+    var textNodetheme2 = document.createTextNode(output.closestPoint.game_2[5]);
+    theme2.appendChild(textNodetheme2);
+    var series2 = document.getElementById("series2")
+    var textNodeseries2 = document.createTextNode(output.closestPoint.game_2[6]);
+    series2.appendChild(textNodeseries2);
+    var playModes2 = document.getElementById("playModes2")
+    var textNodeplayModes2 = document.createTextNode(output.closestPoint.game_2[4]);
+    playModes2.appendChild(textNodeplayModes2);
+    var perspective2 = document.getElementById("perspective2")
+    var textNodeperspective2 = document.createTextNode(output.closestPoint.game_2[7]);
+    perspective2.appendChild(textNodeperspective2);
+    var desc2 = document.getElementById("desc2")
+    var textNodedesc2 = document.createTextNode(output.closestPoint.game_2[10]);
+    desc2.appendChild(textNodedesc2);
+    var rating2 = document.getElementById("rating2")
+    var textNoderating2 = document.createTextNode(convertNumToStar(output.closestPoint.game_2[9]));
+    rating2.appendChild(textNoderating2);
+    // Text Elements for Result 3
+    var title3 = document.getElementById("title3")
+    var textNodeTitle3 = document.createTextNode(output.closestPoint.game_3[0]);
+    title3.appendChild(textNodeTitle3);
+    var system3 = document.getElementById("system3")
+    var textNodesystem3 = document.createTextNode(output.closestPoint.game_3[2]);
+    system3.appendChild(textNodesystem3);
+    var genre3 = document.getElementById("genre3")
+    var textNodegenre3 = document.createTextNode(output.closestPoint.game_3[3]);
+    genre3.appendChild(textNodegenre3);
+    var theme3 = document.getElementById("theme3")
+    var textNodetheme3 = document.createTextNode(output.closestPoint.game_3[5]);
+    theme3.appendChild(textNodetheme3);
+    var series3 = document.getElementById("series3")
+    var textNodeseries3 = document.createTextNode(output.closestPoint.game_3[6]);
+    series3.appendChild(textNodeseries3);
+    var playModes3 = document.getElementById("playModes3")
+    var textNodeplayModes3 = document.createTextNode(output.closestPoint.game_3[4]);
+    playModes3.appendChild(textNodeplayModes3);
+    var perspective3 = document.getElementById("perspective3")
+    var textNodeperspective3 = document.createTextNode(output.closestPoint.game_3[7]);
+    perspective3.appendChild(textNodeperspective3);
+    var desc3 = document.getElementById("desc3")
+    var textNodedesc3 = document.createTextNode(output.closestPoint.game_3[10]);
+    desc3.appendChild(textNodedesc3);
+    var rating3 = document.getElementById("rating3")
+    var textNoderating3 = document.createTextNode(convertNumToStar(output.closestPoint.game_3[9]));
+    rating3.appendChild(textNoderating3);
+    // Text Elements for Result 4
+    var title4 = document.getElementById("title4")
+    var textNodeTitle4 = document.createTextNode(output.closestPoint.game_4[0]);
+    title4.appendChild(textNodeTitle4);
+    var system4 = document.getElementById("system4")
+    var textNodesystem4 = document.createTextNode(output.closestPoint.game_4[2]);
+    system4.appendChild(textNodesystem4);
+    var genre4 = document.getElementById("genre4")
+    var textNodegenre4 = document.createTextNode(output.closestPoint.game_4[3]);
+    genre4.appendChild(textNodegenre4);
+    var theme4 = document.getElementById("theme4")
+    var textNodetheme4 = document.createTextNode(output.closestPoint.game_4[5]);
+    theme4.appendChild(textNodetheme4);
+    var series4 = document.getElementById("series4")
+    var textNodeseries4 = document.createTextNode(output.closestPoint.game_4[6]);
+    series4.appendChild(textNodeseries4);
+    var playModes4 = document.getElementById("playModes4")
+    var textNodeplayModes4 = document.createTextNode(output.closestPoint.game_4[4]);
+    playModes4.appendChild(textNodeplayModes4);
+    var perspective4 = document.getElementById("perspective4")
+    var textNodeperspective4 = document.createTextNode(output.closestPoint.game_4[7]);
+    perspective4.appendChild(textNodeperspective4);
+    var desc4 = document.getElementById("desc4")
+    var textNodedesc4 = document.createTextNode(output.closestPoint.game_4[10]);
+    desc4.appendChild(textNodedesc4);
+    var rating4 = document.getElementById("rating4")
+    var textNoderating4 = document.createTextNode(convertNumToStar(output.closestPoint.game_4[9]));
+    rating4.appendChild(textNoderating4);
+    // Text Elements for Result 5
+    var title5 = document.getElementById("title5")
+    var textNodeTitle5 = document.createTextNode(output.closestPoint.game_5[0]);
+    title5.appendChild(textNodeTitle5);
+    var system5 = document.getElementById("system5")
+    var textNodesystem5 = document.createTextNode(output.closestPoint.game_5[2]);
+    system5.appendChild(textNodesystem5);
+    var genre5 = document.getElementById("genre5")
+    var textNodegenre5 = document.createTextNode(output.closestPoint.game_5[3]);
+    genre5.appendChild(textNodegenre5);
+    var theme5 = document.getElementById("theme5")
+    var textNodetheme5 = document.createTextNode(output.closestPoint.game_5[5]);
+    theme5.appendChild(textNodetheme5);
+    var series5 = document.getElementById("series5")
+    var textNodeseries5 = document.createTextNode(output.closestPoint.game_5[6]);
+    series5.appendChild(textNodeseries5);
+    var playModes5 = document.getElementById("playModes5")
+    var textNodeplayModes5 = document.createTextNode(output.closestPoint.game_5[4]);
+    playModes5.appendChild(textNodeplayModes5);
+    var perspective5 = document.getElementById("perspective5")
+    var textNodeperspective5 = document.createTextNode(output.closestPoint.game_5[7]);
+    perspective5.appendChild(textNodeperspective5);
+    var desc5 = document.getElementById("desc5")
+    var textNodedesc5 = document.createTextNode(output.closestPoint.game_5[10]);
+    desc5.appendChild(textNodedesc5);
+    var rating5 = document.getElementById("rating5")
+    var textNoderating5 = document.createTextNode(convertNumToStar(output.closestPoint.game_5[9]));
+    rating5.appendChild(textNoderating5);
+    // Text Elements for Result 6
+    var title6 = document.getElementById("title6")
+    var textNodeTitle6 = document.createTextNode(output.closestPoint.game_6[0]);
+    title6.appendChild(textNodeTitle6);
+    var system6 = document.getElementById("system6")
+    var textNodesystem6 = document.createTextNode(output.closestPoint.game_6[2]);
+    system6.appendChild(textNodesystem6);
+    var genre6 = document.getElementById("genre6")
+    var textNodegenre6 = document.createTextNode(output.closestPoint.game_6[3]);
+    genre6.appendChild(textNodegenre6);
+    var theme6 = document.getElementById("theme6")
+    var textNodetheme6 = document.createTextNode(output.closestPoint.game_6[5]);
+    theme6.appendChild(textNodetheme6);
+    var series6 = document.getElementById("series6")
+    var textNodeseries6 = document.createTextNode(output.closestPoint.game_6[6]);
+    series6.appendChild(textNodeseries6);
+    var playModes6 = document.getElementById("playModes6")
+    var textNodeplayModes6 = document.createTextNode(output.closestPoint.game_6[4]);
+    playModes6.appendChild(textNodeplayModes6);
+    var perspective6 = document.getElementById("perspective6")
+    var textNodeperspective6 = document.createTextNode(output.closestPoint.game_6[7]);
+    perspective6.appendChild(textNodeperspective6);
+    var desc6 = document.getElementById("desc6")
+    var textNodedesc6 = document.createTextNode(output.closestPoint.game_6[10]);
+    desc6.appendChild(textNodedesc6);
+    var rating6 = document.getElementById("rating6")
+    var textNoderating6 = document.createTextNode(convertNumToStar(output.closestPoint.game_6[9]));
+    rating6.appendChild(textNoderating6);
+    // Text Elements for Result 7
+    var title7 = document.getElementById("title7")
+    var textNodeTitle7 = document.createTextNode(output.closestPoint.game_7[0]);
+    title7.appendChild(textNodeTitle7);
+    var system7 = document.getElementById("system7")
+    var textNodesystem7 = document.createTextNode(output.closestPoint.game_7[2]);
+    system7.appendChild(textNodesystem7);
+    var genre7 = document.getElementById("genre7")
+    var textNodegenre7 = document.createTextNode(output.closestPoint.game_7[3]);
+    genre7.appendChild(textNodegenre7);
+    var theme7 = document.getElementById("theme7")
+    var textNodetheme7 = document.createTextNode(output.closestPoint.game_7[5]);
+    theme7.appendChild(textNodetheme7);
+    var series7 = document.getElementById("series7")
+    var textNodeseries7 = document.createTextNode(output.closestPoint.game_7[6]);
+    series7.appendChild(textNodeseries7);
+    var playModes7 = document.getElementById("playModes7")
+    var textNodeplayModes7 = document.createTextNode(output.closestPoint.game_7[4]);
+    playModes7.appendChild(textNodeplayModes7);
+    var perspective7 = document.getElementById("perspective7")
+    var textNodeperspective7 = document.createTextNode(output.closestPoint.game_7[7]);
+    perspective7.appendChild(textNodeperspective7);
+    var desc7 = document.getElementById("desc7")
+    var textNodedesc7 = document.createTextNode(output.closestPoint.game_7[10]);
+    desc7.appendChild(textNodedesc7);
+    var rating7 = document.getElementById("rating7")
+    var textNoderating7 = document.createTextNode(convertNumToStar(output.closestPoint.game_7[9]));
+    rating7.appendChild(textNoderating7);
+    // Text Elements for Result 8
+    var title8 = document.getElementById("title8")
+    var textNodeTitle8 = document.createTextNode(output.closestPoint.game_8[0]);
+    title8.appendChild(textNodeTitle8);
+    var system8 = document.getElementById("system8")
+    var textNodesystem8 = document.createTextNode(output.closestPoint.game_8[2]);
+    system8.appendChild(textNodesystem8);
+    var genre8 = document.getElementById("genre8")
+    var textNodegenre8 = document.createTextNode(output.closestPoint.game_8[3]);
+    genre8.appendChild(textNodegenre8);
+    var theme8 = document.getElementById("theme8")
+    var textNodetheme8 = document.createTextNode(output.closestPoint.game_8[5]);
+    theme8.appendChild(textNodetheme8);
+    var series8 = document.getElementById("series8")
+    var textNodeseries8 = document.createTextNode(output.closestPoint.game_8[6]);
+    series8.appendChild(textNodeseries8);
+    var playModes8 = document.getElementById("playModes8")
+    var textNodeplayModes8 = document.createTextNode(output.closestPoint.game_8[4]);
+    playModes8.appendChild(textNodeplayModes8);
+    var perspective8 = document.getElementById("perspective8")
+    var textNodeperspective8 = document.createTextNode(output.closestPoint.game_8[7]);
+    perspective8.appendChild(textNodeperspective8);
+    var desc8 = document.getElementById("desc8")
+    var textNodedesc8 = document.createTextNode(output.closestPoint.game_8[10]);
+    desc8.appendChild(textNodedesc8);
+    var rating8 = document.getElementById("rating8")
+    var textNoderating8 = document.createTextNode(convertNumToStar(output.closestPoint.game_8[9]));
+    rating8.appendChild(textNoderating8);
+    // Text Elements for Result 9
+    var title9 = document.getElementById("title9")
+    var textNodeTitle9 = document.createTextNode(output.closestPoint.game_9[0]);
+    title9.appendChild(textNodeTitle9);
+    var system9 = document.getElementById("system9")
+    var textNodesystem9 = document.createTextNode(output.closestPoint.game_9[2]);
+    system9.appendChild(textNodesystem9);
+    var genre9 = document.getElementById("genre9")
+    var textNodegenre9 = document.createTextNode(output.closestPoint.game_9[3]);
+    genre9.appendChild(textNodegenre9);
+    var theme9 = document.getElementById("theme9")
+    var textNodetheme9 = document.createTextNode(output.closestPoint.game_9[5]);
+    theme9.appendChild(textNodetheme9);
+    var series9 = document.getElementById("series9")
+    var textNodeseries9 = document.createTextNode(output.closestPoint.game_9[6]);
+    series9.appendChild(textNodeseries9);
+    var playModes9 = document.getElementById("playModes9")
+    var textNodeplayModes9 = document.createTextNode(output.closestPoint.game_9[4]);
+    playModes9.appendChild(textNodeplayModes9);
+    var perspective9 = document.getElementById("perspective9")
+    var textNodeperspective9 = document.createTextNode(output.closestPoint.game_9[7]);
+    perspective9.appendChild(textNodeperspective9);
+    var desc9 = document.getElementById("desc9")
+    var textNodedesc9 = document.createTextNode(output.closestPoint.game_9[10]);
+    desc9.appendChild(textNodedesc9);
+    var rating9 = document.getElementById("rating9")
+    var textNoderating9 = document.createTextNode(convertNumToStar(output.closestPoint.game_9[9]));
+    rating9.appendChild(textNoderating9);
+    // Text Elements for Result 10
+    var title10 = document.getElementById("title10")
+    var textNodeTitle10 = document.createTextNode(output.closestPoint.game_10[0]);
+    title10.appendChild(textNodeTitle10);
+    var system10 = document.getElementById("system10")
+    var textNodesystem10 = document.createTextNode(output.closestPoint.game_10[2]);
+    system10.appendChild(textNodesystem10);
+    var genre10 = document.getElementById("genre10")
+    var textNodegenre10 = document.createTextNode(output.closestPoint.game_10[3]);
+    genre10.appendChild(textNodegenre10);
+    var theme10 = document.getElementById("theme10")
+    var textNodetheme10 = document.createTextNode(output.closestPoint.game_10[5]);
+    theme10.appendChild(textNodetheme10);
+    var series10 = document.getElementById("series10")
+    var textNodeseries10 = document.createTextNode(output.closestPoint.game_10[6]);
+    series10.appendChild(textNodeseries10);
+    var playModes10 = document.getElementById("playModes10")
+    var textNodeplayModes10 = document.createTextNode(output.closestPoint.game_10[4]);
+    playModes10.appendChild(textNodeplayModes10);
+    var perspective10 = document.getElementById("perspective10")
+    var textNodeperspective10 = document.createTextNode(output.closestPoint.game_10[7]);
+    perspective10.appendChild(textNodeperspective10);
+    var desc10 = document.getElementById("desc10")
+    var textNodedesc10 = document.createTextNode(output.closestPoint.game_10[10]);
+    desc10.appendChild(textNodedesc10);
+    var rating10 = document.getElementById("rating10")
+    var textNoderating10 = document.createTextNode(convertNumToStar(output.closestPoint.game_10[9]));
+    rating10.appendChild(textNoderating10);
  </script>
 </html>

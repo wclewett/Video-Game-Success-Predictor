@@ -60,7 +60,7 @@ function themesDropdown(output) {
 
 function perspectivesDropdown(output) {
     var perspectives = output.playerPerspectives;
-    var perspectivesMenu = d3.select("#themesDropdown");
+    var perspectivesMenu = d3.select("#perspectiveDropdown");
     perspectivesMenu
         .selectAll("option")
         .enter()
