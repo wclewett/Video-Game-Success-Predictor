@@ -16,53 +16,17 @@ function convertNumToStar(data) {
         return 1;
     }
 };
-
-// bar chart functions
-// Define SVG area dimensions
-var svgWidth = 900;
-var svgHeight = 500;
-
-// Define the chart's margins as an object
-var margin = {
-    top: 40,
-    right: 40,
-    bottom: 200,
-    left: 150
-  };
-
-// // Define dimensions of the chart area
-// var chartWidth = svgWidth - margin.left - margin.right;
-// var chartHeight = svgHeight - margin.top - margin.bottom;
-
-// var svg = d3
-//   .select("#resultPlot")
-//   .append("svg")
-//   .attr("height", svgHeight)
-//   .attr("width", svgWidth);
-
-//   function createBars(output) {
-//       // star data
-//       var starData = output.allRatings
-//       // result rating
-//       var prediction = output.prediction
-
-//       // Append a group area, then set its margins
-//       var chart = svg.append("g")
-//       .attr("transform", `translate(${margin.left}, ${margin.top})`);
-      
-//       chartGroup.selectAll(".bar")
-//       .data(starData)
-//       .enter()
-//       .append("rect")
-//       .classed("bar", true)
-//       .attr("width", d => barWidth)
-//       .attr("height", d => d.hours * scaleY)
-//       .attr("x", (d, i) => i * (barWidth + barSpacing))
-//       .attr("y", d => chartHeight - d.hours * scaleY);  
-  
-//       var yLinearScale = d3.scaleLinear()
-//         .range([chartHeight, 0])
-//         .domain([0, d3.max(graphData, function(d) {
-//           return d[method];
-//         })]);
-  
+function colorString(prediction) {
+    console.log(prediction)
+    if (prediction === 1) {
+        return ['rgb(116, 182, 82)', 'rgb(101, 52, 150)', 'rgb(101, 52, 150)', 'rgb(101, 52, 150)', 'rgb(101, 52, 150)'];
+    } else if (prediction === 2) {
+        return ['rgb(101, 52, 150)', 'rgb(116, 182, 82)', 'rgb(101, 52, 150)', 'rgb(101, 52, 150)', 'rgb(101, 52, 150)'];
+    } else if (prediction === 3) {
+        return ['rgb(101, 52, 150)', 'rgb(101, 52, 150)', 'rgb(116, 182, 82)', 'rgb(101, 52, 150)', 'rgb(101, 52, 150)'];
+    } else if (prediction === 4) {
+        return ['rgb(101, 52, 150)', 'rgb(101, 52, 150)', 'rgb(101, 52, 150)', 'rgb(116, 182, 82)', 'rgb(101, 52, 150)'];
+    } else {
+        return ['rgb(101, 52, 150)', 'rgb(101, 52, 150)', 'rgb(101, 52, 150)', 'rgb(101, 52, 150)', 'rgb(116, 182, 82)'];
+    }
+};

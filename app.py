@@ -11,6 +11,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder
+from itertools import groupby
 
 app = Flask(__name__)
 
@@ -158,6 +159,11 @@ def form_submit():
         game_vars.append(int(result.iloc[i]['memberRating']))
         game_vars.append(result.iloc[i]['gameDescription'])
         similarGames[game_number] = game_vars
+    # Create Frequency counts of all ratings
+    y_freq = [len(list(group)) for key, group in groupby(sorted(y.astype(int)))]
+    summaryData = {}
+    for i in range(len(y_freq)):
+        summaryData[f"{i + 1}"] = y_freq[i]
     output = {
         "yourSystem": data_row[0],
         "yourGenres": data_row[1],
@@ -168,7 +174,7 @@ def form_submit():
         "yourDesc": data_row[6],
         "prediction": int(prediction[0]),
         "closestPoint": similarGames,
-        "allRatings": list(y.astype(int))
+        "allRatings": summaryData
     }
     print("--- %s seconds ---" % (time.time() - start_time))
     return render_template("response.html", data=output)

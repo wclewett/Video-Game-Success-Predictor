@@ -18,6 +18,10 @@ select {
     padding-bottom: 10px;
 }
 
+.plot-container.plotly {
+    justify-content: center;
+}
+
 .var-heading {
     font-style: italic;
     text-align: center;
