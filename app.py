@@ -6,6 +6,7 @@ import time
 import random
 import pandas as pd
 import numpy as np
+import pickle
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.feature_extraction.text import CountVectorizer
@@ -14,6 +15,9 @@ from sklearn.preprocessing import OneHotEncoder
 from itertools import groupby
 # Model (can also use single decision tree)
 from sklearn.ensemble import RandomForestClassifier
+# Ignore Warnings
+import warnings
+warnings.filterwarnings("ignore")
 
 app = Flask(__name__)
 
@@ -47,6 +51,15 @@ column_trans = ColumnTransformer(
      ('playerPerspectives', OneHotEncoder(dtype='int'), ['playerPerspectives']),
      ('TfIdf',TfidfVectorizer(stop_words='english'), 'gameDescription')],
     remainder='drop')
+column_trans.fit(X_df)
+column_trans.get_feature_names()
+X = column_trans.transform(X_df).toarray()
+
+#prediction function
+def ValuePredictor(to_predict_list):
+    rf = pickle.load(open("static/assets/model.pkl","rb"))
+    result = rf.predict(to_predict)
+    return result[0]
 
 # home page
 @app.route("/")
@@ -102,17 +115,6 @@ def form_render():
 @app.route("/application", methods=['POST'])
 def form_submit():
     start_time = time.time()
-    column_trans.fit(X_df)
-    column_trans.get_feature_names()
-    X = column_trans.transform(X_df).toarray()
-    # Split data into test and train
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random_state=42, stratify=y)
-    #####################
-    ### RANDOM FOREST ###
-    #####################
-    rf = RandomForestClassifier(n_estimators=1000)
-    # Train
-    rf.fit(X_train, y_train.astype(int))
     # Retrieve data from HTML form
     data_row = []
     data_row.append(request.form['consoles'])
@@ -126,7 +128,7 @@ def form_submit():
     # transform user input data
     X_user_feed = column_trans.transform(X_user).toarray()
     # Predict
-    prediction = rf.predict(X_user_feed)
+    prediction = ValuePredictor(X_user_feed)
     # BRUTE FORCE CLOSEST POINTS
     # compute distances
     d = ((X - X_user_feed)**2).sum(axis=1)
