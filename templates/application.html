@@ -36,35 +36,41 @@
                 <br>
                 <div class="row" style="justify-content: center; background-color: rgb(148, 199, 115);">
                     <form action="/" method="POST">
-                        <p class="var-heading">Game Description</p>
-                        <p class="description-text">Describe the storyline or background of your game in a few sentences.</p>
-                        <textarea name="text" id="descTextArea" cols="50" rows="10"></textarea>
-                        <br>
                         <p class="var-heading">Console Family:</p>
                         <p class="description-text">Add the family of console your game would be playerd on by generation.</p>
                         <select id="consolesDropdown" class="btn btn-secondary dropdown-toggle" name="consoles">
-                            <option value="">-------------------------------------------------------------------------------------------</option>
-                            <option value="Atari">Atari</option>
-                            <option value="Sega">Sega</option>
-                            <option value="SNES">SNES</option>
-                            <option value="N64">Nintendo64</option>
+                            <option value="None Specified">-------------------------------------------------------------------------------------------</option>
                             <!--Append Consoles here using d3-->            
                         </select>
                         <br>
                         <p class="var-heading">Genres:</p>
                         <p class="description-text">Think of the type of game. Ex. Adventure, Platform, Shooter</p>
-                        <textarea name="genres" id="genreTextArea" cols="50" rows="1"></textarea>
+                        <select id="genresDropdown" class="btn btn-secondary dropdown-toggle" name="genres">
+                            <option value="None Specified">-------------------------------------------------------------------------------------------</option>
+                        </select>
                         <p class="var-heading">Themes:</p> 
                         <p class="description-text">Think of the style/setting of game. Ex. Action, Mystery, Sci-Fi</p>
-                        <textarea name="themes" id="genreTextArea" cols="50" rows="1"></textarea>
+                        <select id="themesDropdown" class="btn btn-secondary dropdown-toggle" name="themes">
+                            <option value="None Specified">-------------------------------------------------------------------------------------------</option>
+                        </select>
                         <p class="var-heading">Player Perspective:</p> 
                         <p class="description-text">Think of the player's perspective in the game. Ex. First-Person, Third-Person</p>
-                        <textarea name="perspective" id="genreTextArea" cols="50" rows="1"></textarea>
+                        <select id="perspectiveDropdown" class="btn btn-secondary dropdown-toggle" name="perspectives">
+                            <option value="None Specified">-------------------------------------------------------------------------------------------</option>
+                        </select>
+                        <p class="var-heading">Play Modes:</p>
+                        <p class="description-text">If your game is going to be a sequel to series of games, you can add that here.</p>
+                        <select id="playModesDropdown" class="btn btn-secondary dropdown-toggle" name="series">
+                            <option value="None Specified">-------------------------------------------------------------------------------------------</option>
+                        </select>
                         <p class="var-heading">Series:</p>
                         <p class="description-text">If your game is going to be a sequel to series of games, you can add that here.</p>
                         <select id="seriesDropdown" class="btn btn-secondary dropdown-toggle" name="series">
-                            <option value="">-------------------------------------------------------------------------------------------</option>
+                            <option value="None Specified">-------------------------------------------------------------------------------------------</option>
                         </select>
+                        <p class="var-heading">Game Description</p>
+                        <p class="description-text">Describe the storyline or background of your game in a few sentences.</p>
+                        <textarea name="text" id="descTextArea" cols="50" rows="10"></textarea>
                         <br>
                         <br>
                         <input type="submit" style="text-align: center;">
@@ -77,13 +83,15 @@
         <br>
         <br>
     </div>
-    <div id="footer">
-        <p>Built by Team Splinter &copy;2020</p>
-    </div>
   </body>
-  <script type="text/javascript" src="{{url_for('static', filename='js/functions.js')}}"></script>
+  <script type="text/javascript" src="{{url_for('static', filename='js/dropdownFunctions.js')}}"></script>
   <script id="locations" type="text/javascript">
-    var data = dataPull({{ data | tojson }});
-    console.log(data);
+    var output = dataPull({{ data | tojson }});
+    systemsDropdown(output);
+    genresDropdown(output);
+    themesDropdown(output);
+    perspectivesDropdown(output);
+    playModesDropdown(output);
+    seriesDropdown(output);
  </script>
 </html>

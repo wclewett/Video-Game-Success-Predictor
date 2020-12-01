@@ -1,13 +1,9 @@
 from sklearn.model_selection import train_test_split
-from sklearn import tree
-from sklearn.metrics import accuracy_score
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.preprocessing import LabelEncoder
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder
-import pandas as pd 
+import pandas as pd
 import numpy as np
 
 # Ignore Warnings
@@ -25,17 +21,15 @@ X_df = ml_data_feed[['systems', 'genres', 'playModes', 'themes', 'series', 'play
 y = ml_data_feed['memberRating']
 for i in range(len(y)):
     if y[i] > 85:
-        y[i] = 10
-    elif y[i] > 80:
-        y[i] = 9
-    elif y[i] > 75:
-        y[i] = 8    
-    elif y[i] > 70:
-        y[i] = 7
-    elif y[i] > 60:
-        y[i] = 6
-    else:
         y[i] = 5
+    elif y[i] > 75:
+        y[i] = 4
+    elif y[i] > 65:
+        y[i] = 3    
+    elif y[i] > 55:
+        y[i] = 2
+    else:
+        y[i] = 1
 print(y.value_counts())
 y.values.reshape(-1, 1)
     
@@ -49,7 +43,7 @@ column_trans = ColumnTransformer(
      ('themes_category', OneHotEncoder(dtype='int'), ['themes']),
      ('series_category', OneHotEncoder(dtype='int'), ['series']),
      ('playerPerspectives', OneHotEncoder(dtype='int'), ['playerPerspectives']),
-     ('TfIdf',CountVectorizer(stop_words='english'), 'gameDescription')],
+     ('TfIdf',TfidfVectorizer(stop_words='english'), 'gameDescription')],
     remainder='drop')
 
 column_trans.fit(X_df)
@@ -59,7 +53,7 @@ print(X)
 
 
 # Split data into test and train
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42, stratify=y)
 
 #####################
 ### RANDOM FOREST ###
