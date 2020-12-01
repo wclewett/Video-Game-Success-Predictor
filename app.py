@@ -20,7 +20,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 # Read in data
-data = pd.read_csv('assets/data/compressed_df.csv').drop('Unnamed: 0', axis=1)
+data = pd.read_csv('static/assets/data/compressed_df.csv').drop('Unnamed: 0', axis=1)
 data = data.fillna('None Specified')
 # begin X,y transformation
 ml_data_feed = data[['title', 'systems', 'genres', 'playModes', 'themes', 'series', 'playerPerspectives', 'gameDescription', 'memberRating']]
